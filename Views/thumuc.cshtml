@@ -1,0 +1,16 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = "Master.cshtml";
+}
+
+<ul>
+    @foreach (var child in Model.Children())
+    {
+        <li><a href="@child.Url()">@child.Name()      -   Create at: @child.CreateDate      -   Updated at: @child.UpdateDate    -   has ID: @child.Id       -   Author: @child.CreatorName()   -   ParentName : @child.Parent.Name </a></li>
+    }
+</ul>
+
+
+
+
