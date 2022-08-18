@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Umbraco9;
-
 namespace Myproject
 {
     public class Startup
@@ -23,6 +21,7 @@ namespace Myproject
             _env = webHostEnvironment ?? throw new ArgumentNullException(nameof(webHostEnvironment));
             _config = config ?? throw new ArgumentNullException(nameof(config));
         }
+        
 
         /// <summary>
         /// Configures the services.
@@ -40,6 +39,11 @@ namespace Myproject
                 .AddComposers()
                 .AddOpenIdConnectAuthentication()
                 .Build();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Cookie";
+                options.DefaultChallengeScheme = "oidc";
+            }).AddCookie("Cookie");
         }
 
         

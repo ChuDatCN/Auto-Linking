@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Umbraco9;
 
 namespace Myproject
 {
@@ -19,8 +18,7 @@ namespace Myproject
                     {
                         backOfficeAuthenticationBuilder.AddOpenIdConnect(
                             // The scheme must be set with this method to work for the back office
-                            backOfficeAuthenticationBuilder.SchemeForBackOffice(OpenIdConnectBackOfficeExternalLoginProviderOptions.SchemeName),
-                            options =>
+                            backOfficeAuthenticationBuilder.SchemeForBackOffice(OpenIdConnectBackOfficeExternalLoginProviderOptions.SchemeName), options =>
                             {
                                 // use cookies
                                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -41,9 +39,12 @@ namespace Myproject
                                 options.SaveTokens = true;
                                 // add scopes
                                 options.Scope.Add("openid");
-                                //options.Scope.Add("email");
+                                options.Scope.Add("profile");
+                                options.Scope.Add("email");
                                 //options.Scope.Add("roles");
+
                                 options.UsePkce = true;
+                                //options.UsePkce = false;
                             });
                     });
             });

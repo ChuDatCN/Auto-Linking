@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Web.BackOffice.Security;
 
-namespace Umbraco9
+namespace Myproject
 {
     public class OpenIdConnectBackOfficeExternalLoginProviderOptions : IConfigureNamedOptions<BackOfficeExternalLoginProviderOptions>
     {
@@ -32,7 +33,7 @@ namespace Umbraco9
                 // Optionally specify default user group, else
                 // assign in the OnAutoLinking callback
                 // (default is editor)
-                defaultUserGroups: new[] { Constants.Security.AdminGroupAlias },
+                defaultUserGroups: new[] { Constants.Security.EditorGroupAlias },
 
                 // Optionally specify the default culture to create
                 // the user as. If null it will use the default
@@ -54,6 +55,10 @@ namespace Umbraco9
                     // You can customize the user before it's linked.
                     // i.e. Modify the user's groups based on the Claims returned
                     // in the externalLogin info
+                    //System.Diagnostics.Debug.WriteLine("Auto Linking here");
+                    //System.Diagnostics.Debug.WriteLine(autoLinkUser);
+                    //System.Diagnostics.Debug.WriteLine(loginInfo);
+
                 },
                 OnExternalLogin = (user, loginInfo) =>
                 {
@@ -66,15 +71,13 @@ namespace Umbraco9
                 }
             };
 
-            // Optionally you can disable the ability for users
-            // to login with a username/password. If this is set
-            // to true, it will disable username/password login
-            // even if there are other external login providers installed.
+            // Optionally you can disable the ability for users to login with a username/password.
+            //  If this is set to true, it will disable username/password login even if there are other external login providers installed.
+
             options.DenyLocalLogin = false;
 
-            // Optionally choose to automatically redirect to the
-            // external login provider so the user doesn't have
-            // to click the login button. This is
+            // Optionally choose to automatically redirect to the external login provider so the user doesn't have to click the login button. This is
+
             options.AutoRedirectLoginToExternalProvider = false;
         }
 
