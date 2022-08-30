@@ -41,7 +41,7 @@ namespace Myproject
                 // be dynamically assigned in the OnAutoLinking
                 // callback.
 
-                defaultCulture: null,
+                defaultCulture: "en-US",
                 // Optionally you can disable the ability to link/unlink
                 // manually from within the back office. Set this to false
                 // if you don't want the user to unlink from this external
@@ -58,7 +58,13 @@ namespace Myproject
                     //System.Diagnostics.Debug.WriteLine("Auto Linking here");
                     //System.Diagnostics.Debug.WriteLine(autoLinkUser);
                     //System.Diagnostics.Debug.WriteLine(loginInfo);
-
+                    Console.WriteLine("Auto Linking here" + loginInfo + autoLinkUser);
+                    Console.WriteLine(loginInfo);
+                    Console.WriteLine(autoLinkUser);
+                    autoLinkUser.AddRole(Constants.Security.EditorGroupAlias);
+                    autoLinkUser.Culture = "en-US";
+   
+                    
                 },
                 OnExternalLogin = (user, loginInfo) =>
                 {
@@ -66,7 +72,9 @@ namespace Myproject
                     // logged in with the external provider.
                     // i.e. Sync the user's name based on the Claims returned
                     // in the externalLogin info
-
+                    System.Diagnostics.Debug.WriteLine(user);
+                    Console.WriteLine(user) ;
+                    Console.WriteLine(loginInfo);
                     return true; //returns a boolean indicating if sign in should continue or not.
                 }
             };

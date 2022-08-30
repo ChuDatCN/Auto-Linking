@@ -33,17 +33,19 @@ namespace Myproject
         /// </remarks>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Cookie";
+                options.DefaultChallengeScheme = "oidc";
+            }).AddCookie("Cookie");
+
             services.AddUmbraco(_env, _config)
                 .AddBackOffice()
                 .AddWebsite()
                 .AddComposers()
                 .AddOpenIdConnectAuthentication()
                 .Build();
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = "Cookie";
-                options.DefaultChallengeScheme = "oidc";
-            }).AddCookie("Cookie");
+
         }
 
         
