@@ -26,6 +26,7 @@ namespace Myproject
 
             options.ButtonStyle = "btn-danger";
             options.Icon = "fa fa-cloud";
+
             options.AutoLinkOptions = new ExternalSignInAutoLinkOptions(
                 // must be true for auto-linking to be enabled
                 autoLinkExternalAccount: true,
@@ -40,7 +41,7 @@ namespace Myproject
                 // culture defined in the web.config, or it can
                 // be dynamically assigned in the OnAutoLinking
                 // callback.
-
+    
                 defaultCulture: "en-US",
                 // Optionally you can disable the ability to link/unlink
                 // manually from within the back office. Set this to false
@@ -52,19 +53,17 @@ namespace Myproject
                 // Optional callback
                 OnAutoLinking = (autoLinkUser, loginInfo) =>
                 {
+                    //if (!autoLinkUser.IsApproved)
+                    //{
+                    //    autoLinkUser.IsApproved = true;
+                    //}
                     // You can customize the user before it's linked.
                     // i.e. Modify the user's groups based on the Claims returned
-                    // in the externalLogin info
-                    //System.Diagnostics.Debug.WriteLine("Auto Linking here");
-                    //System.Diagnostics.Debug.WriteLine(autoLinkUser);
-                    //System.Diagnostics.Debug.WriteLine(loginInfo);
                     Console.WriteLine("Auto Linking here" + loginInfo + autoLinkUser);
                     Console.WriteLine(loginInfo);
                     Console.WriteLine(autoLinkUser);
-                    autoLinkUser.AddRole(Constants.Security.EditorGroupAlias);
-                    autoLinkUser.Culture = "en-US";
-   
-                    
+                    autoLinkUser.IsApproved = true;
+
                 },
                 OnExternalLogin = (user, loginInfo) =>
                 {
@@ -74,7 +73,11 @@ namespace Myproject
                     // in the externalLogin info
                     System.Diagnostics.Debug.WriteLine(user);
                     Console.WriteLine(user) ;
-                    Console.WriteLine(loginInfo);
+                    Console.WriteLine(loginInfo.Principal);
+
+                    Console.WriteLine(user.Id);
+                    Console.WriteLine(user.Name);
+                    Console.WriteLine(user.Email);
                     return true; //returns a boolean indicating if sign in should continue or not.
                 }
             };

@@ -8,6 +8,9 @@
     @foreach (var child in Model.Children())
     {
         <li><a href="@child.Url()">@child.Name()      -   Create at: @child.CreateDate      -   Updated at: @child.UpdateDate    -   has ID: @child.Id       -   Author: @child.CreatorName()   -   ParentName : @child.Parent.Name </a></li>
+        @if(child.Children.Any()){
+            <a> hello</a>
+        }
     }
 </ul>
 

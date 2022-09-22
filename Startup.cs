@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Web.BackOffice.Security;
+
 namespace Myproject
 {
     public class Startup
@@ -35,12 +38,77 @@ namespace Myproject
         {
             services.AddAuthentication(options =>
             {
-                options.DefaultScheme = "Cookie";
-                options.DefaultChallengeScheme = "oidc";
-            }).AddCookie("Cookie");
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            }).AddCookie();
 
             services.AddUmbraco(_env, _config)
                 .AddBackOffice()
+                //.AddBackOfficeExternalLogins(builder =>
+                //    builder.AddBackOfficeLogin(
+                //        build =>
+
+                //           build.AddOpenIdConnect(
+                //                   build.SchemeForBackOffice(OpenIdConnectDefaults.AuthenticationScheme),
+                //                   "External login",
+                //                   options =>
+                //                   {
+                //                       // use cookies
+                //                       options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                //                       // pass configured options along
+                //                       // Use the authorization code flow
+                //                       options.AuthenticationMethod = OpenIdConnectRedirectBehavior.RedirectGet;
+
+                //                       options.RequireHttpsMetadata = false;
+                //                       options.Authority = "https://localhost:5001";
+                //                       options.MetadataAddress = "https://localhost:5001/.well-known/openid-configuration";
+                //                       options.ClientSecret = "umbraco-backoffice1";
+                //                       options.ClientId = "secret";
+                //                       options.GetClaimsFromUserInfoEndpoint = true;
+                //                       options.ResponseType = "code id_token";
+                //                       options.CallbackPath = new PathString("/");
+                //                       options.RemoteSignOutPath = "/oidc-signout";
+                //                       options.SignedOutRedirectUri = "**";
+
+                //                       options.Scope.Clear();
+                //                       options.Scope.Add("openid");
+                //                       options.Scope.Add("profile");
+                //                       options.Scope.Add("email");
+                //                       options.SaveTokens = true;
+                //                       options.UsePkce = true;
+
+                //                       options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                //                       {
+                //                           NameClaimType = "name",
+                //                           RoleClaimType = "role",
+
+                //                       };
+
+                //                   }
+                //               ),
+                //       options =>
+                //               new BackOfficeExternalLoginProviderOptions(
+
+                //                   "btn-primary", // button stype
+                //                   "fa-windows", // icon
+                //                    new ExternalSignInAutoLinkOptions(autoLinkExternalAccount: true, defaultUserGroups: new[] { Constants.Security.EditorGroupAlias }, defaultCulture: "en-US", allowManualLinking: true)
+                //                    {
+                //                        OnAutoLinking = (user, loginInfo) =>
+                //                        {
+                //                            //
+                //                        },
+                //                        OnExternalLogin = (user, loginInfo) =>
+                //                        {
+                //                            return true;
+
+                //                        }
+                //                    },
+
+                //                   true, // deny local login
+                //                   false, // autoredirect local login to external login
+                //                   null) // custom backoffice view
+                //       )
+                //   )
                 .AddWebsite()
                 .AddComposers()
                 .AddOpenIdConnectAuthentication()
